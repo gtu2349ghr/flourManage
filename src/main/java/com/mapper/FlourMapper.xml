@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.FlourMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Flour">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="flour" jdbcType="VARCHAR" property="flour" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="number" jdbcType="INTEGER" property="number"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, flour, price,number
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from flour
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from flour
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Flour">
+    insert into flour (id, flour, price, 
+      number,image)
+    values (#{id,jdbcType=INTEGER}, #{flour,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
+      #{number,jdbcType=INTEGER},#{image,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Flour">
+    insert into flour
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="flour != null">
+        flour,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="flour != null">
+        #{flour,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Flour">
+    update flour
+    <set>
+      <if test="flour != null">
+        flour = #{flour,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Flour">
+    update flour
+    set flour = #{flour,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      number = #{number,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultType="com.entity.Flour">
+    select * from flour
+  </select>
+  <select id="selectByPage" resultType="com.entity.Flour">
+    select * from flour limit #{currentPage},#{limitPage}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(id) from flour
+  </select>
+  <select id="selectByLikeName" resultType="com.entity.Flour">
+    select * from flour where flour like "%"#{name}"%"
+  </select>
+</mapper>

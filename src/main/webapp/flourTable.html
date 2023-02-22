@@ -1,0 +1,153 @@
+<!DOCTYPE html >
+<!-- 网页使用的语言 -->
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 指定字符集 -->
+    <meta charset="utf-8">
+    <!-- 使用Edge最新的浏览器的渲染方式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- viewport视口：网页可以根据设置的宽度自动进行适配，在浏览器的内部虚拟一个容器，容器的宽度与设备的宽度相同。
+    width: 默认宽度与设备的宽度相同
+    initial-scale: 初始的缩放比，为1:1 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>鲜花管理系统</title>
+
+    <!-- 导入CSS的全局样式 -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../static/js/jquery-2.1.0.min.js"></script>
+
+
+    <style type="text/css">
+
+        td, th {
+            text-align: center;
+        }
+
+        /*body {*/
+        /*background: url("img/userInfoList.jpg") center;;*/
+        /*}*/
+    </style>
+
+</head>
+<body>
+
+
+<div class="container">
+    <h2 class="text-info" style="text-align: center">
+        <i class="bookmark icon"></i>
+        鲜花种类列表</h2>
+    <br/>
+
+<!--    <div style="float: left;">-->
+<!--        <form id="complexQuery" class="form-inline">-->
+<!--            <div class="form-group">-->
+<!--                <label for="InputUsername">鲜花名称</label>-->
+<!--                <input type="text" name="username" class="form-control" id="InputUsername" placeholder="请输入鲜花名称">-->
+<!--            </div>-->
+<!--            <button type="button" class="btn btn-default" id="cQuery" onclick="selectLike()">查询</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    <div style="float: right;margin: 5px;">-->
+<!--        <button id="update-department-btn" class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
+<!--            新增鲜花-->
+<!--        </button>-->
+<!--        <a id="findAll" class="btn btn-primary" href="javaScript:findAll()">单页显示</a>-->
+<!--        &lt;!&ndash;<a class="btn btn-primary" id="select_deleteBtn">删除选中</a>&ndash;&gt;-->
+<!--        <input id="flourid" placeholder="请选择要删除花朵的id">-->
+<!--        <button type="button" class="btn btn-danger" id="selected_deleteBtn" onclick="flourDelete()">删除选中</button>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; 模态框（Modal） &ndash;&gt;-->
+<!--    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+<!--        <div class="modal-dialog">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
+<!--                        &times;-->
+<!--                    </button>-->
+<!--                    <h4 class="modal-title" id="myModalLabel">-->
+<!--                        新增鲜花-->
+<!--                    </h4>-->
+<!--                </div>-->
+
+                <div class="modal-body">
+                    <table border="1" class="table table-bordered table-hover" id="department_table">
+                        <tr class="info">
+                            <th>鲜花名称</th>
+                            <th>鲜花价格</th>
+                            <th>鲜花数量</th>
+                        </tr>
+                    </table>
+
+<!--                    <form role="form">-->
+<!--                        <div class="form-group">-->
+<!--                            <input id="input-department" type="text" class="form-control" placeholder="请输入新增部门名称">-->
+<!--                            <br>-->
+<!--                            <div style="text-align: center">-->
+<!--                                <button id="add-department" type="button" class="btn btn-primary">-->
+<!--                                    新增鲜花-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </form>-->
+
+                </div>
+                <div class="1modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="off()">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <table border="1" class="table table-bordered table-hover" id="userInfo_table">
+        <tr class="info">
+            <th><input type="checkbox" name="checkAll" id="checkAll"/></th>
+            <th >鲜花名称</th>
+            <th>鲜花价格</th>
+            <th>鲜花数量</th>
+        </tr>
+        <tr th:each="list1:${list}">
+            <th th:text="${list1.getId()}"></th>
+            <th th:text="${list1.getFlour() }"></th>
+            <th th:text="${list1.getPrice() }"></th>
+            <th th:text="${list1.getNumber() }"></th>
+        </tr>
+    </table>
+
+
+<!--    <nav aria-label="Page navigation">-->
+<!--        <ul id="pageNum" class="pagination">-->
+<!--            <li><a th:href="@{/index(currentPage=${currentPage}-1)}" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>-->
+
+<!--            <li><a th:href="@{/index(currentPage=1)}">1</a></li>-->
+<!--            <li><a th:href="@{/index(currentPage=2)}">2</a></li>-->
+<!--            <li><a th:href="@{/index(currentPage=3)}">3</a></li>-->
+<!--            <li><a th:href="@{/index(currentPage=4)}">4</a></li>-->
+<!--            <li><a th:href="@{/index(currentPage=5)}">5</a></li>-->
+
+<!--            <li><a th:href="@{/index(currentPage=${currentPage}+1)}" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>-->
+
+<!--            <span id="pageCount" style="font-size: 25px;margin-left: 5px;" th:text="|共${TotelCount}条记录，共${TotelPage}页|"></span>-->
+<!--        </ul>-->
+<!--    </nav>-->
+<!--</div>-->
+
+</div>
+<!-- jQuery导入，建议使用1.9以上的版本 -->
+<script src="../js/jquery-2.1.0.min.js"></script>
+<!-- 导入bootstrap的js文件 -->
+<script src="../js/bootstrap.min.js"></script>
+
+<script src="../js/getParameter.js"></script>
+
+
+<script  type="text/javascript" th:inline="javascript">
+ function off(){
+     window.location.href="/flour"
+ }
+
+</script>
+</body>
+</html>
